@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-body text-text-main bg-white;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-lg font-body font-semibold hover:bg-primary-dark transition-all duration-300 shadow-card hover:shadow-card-hover;
+  }
+  .btn-secondary {
+    @apply bg-secondary text-dark px-6 py-3 rounded-lg font-body font-semibold hover:bg-secondary-dark transition-all duration-300;
+  }
+  .btn-outline {
+    @apply border-2 border-primary text-primary px-6 py-3 rounded-lg font-body font-semibold hover:bg-primary hover:text-white transition-all duration-300;
+  }
+  .section-heading {
+    @apply font-display text-3xl md:text-4xl font-bold text-primary mb-2;
+  }
+  .section-subheading {
+    @apply font-body text-secondary text-lg mb-8;
+  }
+  .card {
+    @apply bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300;
+  }
+  .input-field {
+    @apply w-full border border-gray-300 rounded-lg px-4 py-3 font-body text-text-main focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all;
+  }
+  .label {
+    @apply block text-sm font-semibold text-text-main mb-1 font-body;
+  }
+  .admin-sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-primary hover:text-white transition-all duration-200 font-body;
+  }
+  .admin-sidebar-link.active {
+    @apply bg-primary text-white;
+  }
+}
+
+/* Swiper custom styles */
+.swiper-pagination-bullet-active {
+  background-color: #D4A017 !important;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: #D4A017 !important;
+}
+
+/* Page transition */
+.page-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* Decorative divider */
+.ornate-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.ornate-divider::before,
+.ornate-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #D4A017, transparent);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F0E8;
+}
+::-webkit-scrollbar-thumb {
+  background: #8B1A1A;
+  border-radius: 3px;
+}
