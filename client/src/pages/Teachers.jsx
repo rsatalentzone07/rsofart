@@ -16,13 +16,17 @@ const ArtworkModal = ({ teacher, onClose }) => {
   const onBackdrop = (e) => { if (e.target === e.currentTarget) onClose(); };
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden'; // ← lock scroll when modal opens
     const handler = (e) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowLeft') prev();
       if (e.key === 'ArrowRight') next();
     };
     window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    return () => {
+    document.body.style.overflow = ''; // ← restore scroll when modal closes
+    window.removeEventListener('keydown', handler);
+  };
   }, []);
 
   return (
