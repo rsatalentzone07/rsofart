@@ -24,9 +24,9 @@ const ArtworkModal = ({ teacher, onClose }) => {
     };
     window.addEventListener('keydown', handler);
     return () => {
-    document.body.style.overflow = ''; // ← restore scroll when modal closes
-    window.removeEventListener('keydown', handler);
-  };
+      document.body.style.overflow = ''; // ← restore scroll when modal closes
+      window.removeEventListener('keydown', handler);
+    };
   }, []);
 
   return (
@@ -63,9 +63,8 @@ const ArtworkModal = ({ teacher, onClose }) => {
               <img src={resolveUrl(teacher.photo)} alt={teacher.name} className="w-14 h-14 rounded-xl object-cover mb-3 border-2 border-white/20" />
             )}
             <h3 className="font-display text-white text-base font-semibold leading-tight">{teacher.name}</h3>
-            <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full font-body capitalize mt-2 inline-block ${
-              teacher.courseType === 'art' ? 'bg-primary/40 text-white' : 'bg-yellow-500/30 text-white'
-            }`}>{teacher.courseType}</span>
+            <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full font-body capitalize mt-2 inline-block ${teacher.courseType === 'art' ? 'bg-primary/40 text-white' : 'bg-yellow-500/30 text-white'
+              }`}>{teacher.courseType}</span>
             {teacher.qualification && <p className="text-white/50 text-xs font-body mt-1">{teacher.qualification}</p>}
             {teacher.area && <p className="text-white/40 text-xs font-body">{teacher.area}</p>}
             <p className="text-white/30 text-xs font-body mt-2 border-t border-white/10 pt-2">
@@ -78,9 +77,8 @@ const ArtworkModal = ({ teacher, onClose }) => {
               <div className="grid grid-cols-3 lg:grid-cols-2 gap-2 max-h-64 overflow-y-auto">
                 {photos.map((url, i) => (
                   <button key={i} onClick={() => setActive(i)}
-                    className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                      active === i ? 'border-primary scale-105' : 'border-transparent opacity-50 hover:opacity-90'
-                    }`}>
+                    className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${active === i ? 'border-primary scale-105' : 'border-transparent opacity-50 hover:opacity-90'
+                      }`}>
                     <img src={resolveUrl(url)} alt={`thumb ${i + 1}`} className="w-full h-full object-cover" />
                   </button>
                 ))}
@@ -95,14 +93,14 @@ const ArtworkModal = ({ teacher, onClose }) => {
 
 const Teachers = () => {
   const [teachers, setTeachers] = useState([]);
-  const [filter, setFilter]     = useState('all');
-  const [loading, setLoading]   = useState(true);
+  const [filter, setFilter] = useState('all');
+  const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     api.get('/teachers')
       .then(r => setTeachers(r.data))
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   }, []);
 
@@ -120,9 +118,8 @@ const Teachers = () => {
         <div className="flex flex-wrap gap-3 mb-10 justify-center">
           {TYPES.map(type => (
             <button key={type} onClick={() => setFilter(type)}
-              className={`px-5 py-2 rounded-full font-body font-medium capitalize text-sm transition-all ${
-                filter === type ? 'bg-primary text-white shadow-card' : 'bg-white text-gray-600 hover:bg-primary/10'
-              }`}>
+              className={`px-5 py-2 rounded-full font-body font-medium capitalize text-sm transition-all ${filter === type ? 'bg-primary text-white shadow-card' : 'bg-white text-gray-600 hover:bg-primary/10'
+                }`}>
               {type === 'all' ? 'All' : type}
             </button>
           ))}
