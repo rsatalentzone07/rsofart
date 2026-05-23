@@ -10,7 +10,7 @@ import { ArrowLeft, Save, X } from 'lucide-react';
 
 const schema = z.object({
   name: z.string().min(2, 'Name required'),
-  courseType: z.enum(['art', 'dance', 'music', 'yoga']),
+  courseType: z.enum(['art', 'dance']),
   qualification: z.string().optional(),
   workExperience: z.string().optional(),
   area: z.string().optional(),

@@ -20,6 +20,7 @@ const Navbar = () => {
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/courses', label: 'Courses' },
+    {to:'/students', label: 'Students'},
     { to: '/teachers', label: 'Teachers' },
     { to: '/gallery', label: 'Gallery' },
     { to: '/contact', label: 'Contact' },

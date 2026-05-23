@@ -8,8 +8,11 @@ const GalleryGrid = ({ images }) => {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
+  const resolveUrl = (url) =>
+    url?.startsWith('http') ? url : `${API_BASE}${url}`;
+
   const slides = images.map(img => ({
-    src: img.imageUrl.startsWith('http') ? img.imageUrl : `${API_BASE}${img.imageUrl}`,
+    src: resolveUrl(img.imageUrl),
     alt: img.caption || '',
   }));
 
@@ -23,10 +26,11 @@ const GalleryGrid = ({ images }) => {
             onClick={() => { setIndex(i); setOpen(true); }}
           >
             <img
-              src={img.imageUrl.startsWith('http') ? img.imageUrl : `${API_BASE}${img.imageUrl}`}
+              src={resolveUrl(img.imageUrl)}
               alt={img.caption || 'Gallery image'}
               className="w-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
+              decoding="async"
             />
             {img.caption && (
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">

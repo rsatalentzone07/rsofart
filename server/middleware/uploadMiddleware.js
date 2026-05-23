@@ -2,33 +2,36 @@ const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('../config/cloudinary');
 
-const createStorage = (folder) =>
+const createStorage = (folder, maxWidth = 1200) =>
   new CloudinaryStorage({
     cloudinary,
     params: {
       folder: `rabindra-art-school/${folder}`,
       allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-      transformation: [{ quality: 'auto', fetch_format: 'auto' }],
+      transformation: [
+        // Auto quality + format (webp/avif where supported) AND resize to max width
+        { quality: 'auto', fetch_format: 'auto', width: maxWidth, crop: 'limit' },
+      ],
     },
   });
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|gif|webp/;
-  const mimetype = allowedTypes.test(file.mimetype);
-  if (mimetype) {
+  if (allowedTypes.test(file.mimetype)) {
     cb(null, true);
   } else {
     cb(new Error('Only image files are allowed'), false);
   }
 };
 
-// Individual upload instances per resource so images are organised in
-// separate Cloudinary folders.
 const upload = {
-  banner: multer({ storage: createStorage('banners'), fileFilter, limits: { fileSize: 5 * 1024 * 1024 } }),
-  gallery: multer({ storage: createStorage('gallery'), fileFilter, limits: { fileSize: 5 * 1024 * 1024 } }),
-  teacher: multer({ storage: createStorage('teachers'), fileFilter, limits: { fileSize: 5 * 1024 * 1024 } }),
-  student: multer({ storage: createStorage('students'), fileFilter, limits: { fileSize: 5 * 1024 * 1024 } }),
+  // Banners: wider (hero images)
+  banner:  multer({ storage: createStorage('banners', 1600),  fileFilter, limits: { fileSize: 5 * 1024 * 1024 } }),
+  // Gallery: standard width
+  gallery: multer({ storage: createStorage('gallery', 1200),  fileFilter, limits: { fileSize: 5 * 1024 * 1024 } }),
+  // Profile photos: smaller
+  teacher: multer({ storage: createStorage('teachers', 800),  fileFilter, limits: { fileSize: 5 * 1024 * 1024 } }),
+  student: multer({ storage: createStorage('students', 800),  fileFilter, limits: { fileSize: 5 * 1024 * 1024 } }),
 };
 
 module.exports = upload;

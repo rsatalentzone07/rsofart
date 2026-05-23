@@ -6,6 +6,9 @@ const gallerySchema = new mongoose.Schema({
   caption: { type: String },
   category: { type: String, enum: ['art', 'dance', 'event', 'campus'], default: 'art' },
   studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', default: null },
+  // "source" distinguishes admin-uploaded gallery images from student/teacher art photos
+  // Only 'admin' items appear on the public /gallery page
+  source: { type: String, enum: ['admin', 'student', 'teacher'], default: 'admin' },
   uploadedAt: { type: Date, default: Date.now },
 });
 

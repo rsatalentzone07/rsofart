@@ -4,9 +4,10 @@ const cloudinary = require('../config/cloudinary');
 const getGallery = async (req, res) => {
   try {
     const { category } = req.query;
-    const filter = {};
+    // Always filter to only admin-uploaded images on the public gallery
+    const filter = { source: 'admin' };
     if (category) filter.category = category;
-    const items = await Gallery.find(filter).populate('studentId', 'name').sort({ uploadedAt: -1 });
+    const items = await Gallery.find(filter).sort({ uploadedAt: -1 });
     res.json(items);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -16,13 +17,13 @@ const getGallery = async (req, res) => {
 const uploadGalleryImage = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
-    const { caption, category, studentId } = req.body;
+    const { caption, category } = req.body;
     const item = await Gallery.create({
-      imageUrl: req.file.path,               // Cloudinary secure_url
+      imageUrl: req.file.path,
       cloudinaryPublicId: req.file.filename,
       caption,
       category: category || 'art',
-      studentId: studentId || null,
+      source: 'admin', // explicitly mark as admin upload
     });
     res.status(201).json(item);
   } catch (error) {

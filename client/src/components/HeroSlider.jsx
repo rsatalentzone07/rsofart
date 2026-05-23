@@ -22,15 +22,15 @@ const FALLBACK_SLIDES = [
 ];
 
 const HeroSlider = () => {
-  const [banners, setBanners] = useState([]);
+  const [slides, setSlides] = useState(FALLBACK_SLIDES);
 
   useEffect(() => {
     api.get('/banners')
-      .then(res => setBanners(res.data.length > 0 ? res.data : FALLBACK_SLIDES))
-      .catch(() => setBanners(FALLBACK_SLIDES));
+      .then(res => {
+        if (res.data && res.data.length > 0) setSlides(res.data);
+      })
+      .catch(() => {}); // keep fallback on error
   }, []);
-
-  const slides = banners.length > 0 ? banners : FALLBACK_SLIDES;
 
   return (
     <div className="relative w-full h-[500px] sm:h-[600px] lg:h-[700px]">
@@ -49,10 +49,11 @@ const HeroSlider = () => {
                 src={slide.imageUrl}
                 alt={slide.title || 'Banner'}
                 className="w-full h-full object-cover"
+                // First slide loads eagerly (LCP element), rest lazy
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchpriority={i === 0 ? 'high' : 'low'}
               />
-              {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
-              {/* Content */}
               <div className="absolute inset-0 flex items-center justify-center text-center px-4">
                 <div className="max-w-3xl">
                   <div className="ornate-divider mb-6">
@@ -69,12 +70,8 @@ const HeroSlider = () => {
                     </p>
                   )}
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link to="/courses" className="btn-primary">
-                      Explore Courses
-                    </Link>
-                    <Link to="/admission" className="btn-secondary">
-                      Apply for Admission
-                    </Link>
+                    <Link to="/courses" className="btn-primary">Explore Courses</Link>
+                    <Link to="/admission" className="btn-secondary">Apply for Admission</Link>
                   </div>
                 </div>
               </div>

@@ -4,7 +4,7 @@ const teacherSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   photo: { type: String },
   cloudinaryPublicId: { type: String },
-  courseType: { type: String, enum: ['art', 'dance', 'music', 'yoga'], required: true },
+  courseType: { type: String, enum: ['art', 'dance'], required: true },
   skills: [{ type: String }],
   qualification: { type: String },
   workExperience: { type: String },

@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import api from '../utils/api';
-import { Phone, MapPin, Mail, Send } from 'lucide-react';
+import { Award, Users, BookOpen, MapPin, ArrowRight, Star, Phone } from 'lucide-react';
 
 const schema = z.object({
   name: z.string().min(2, 'Name is required'),
